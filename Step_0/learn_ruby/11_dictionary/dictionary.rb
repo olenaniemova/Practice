@@ -9,11 +9,12 @@ class Dictionary
     if args.class == String
       @entries[args] = nil
     else
-    args.each do |key,value|
-      @entries["#{key}"] = (value.nil? ? nil : value)
-      #instance_variable_set("@#{key}",value) unless value.nil?
+      @entries.merge!(args)
+
+    #args.each do |key,value|
+    #  @entries["#{key}"] = (value.nil? ? nil : value)
+    #end
     end
-  end
   end
 
   def keywords
@@ -25,24 +26,22 @@ class Dictionary
   end
 
   def find(arg)
-    new_hash = Hash.new
-    unless @entries.empty?
-      @entries.each do |key, value|
-        if key[/^#{arg}/] != nil
-          new_hash[key] = value
-        end
-      end
-    end
-    new_hash
+    #new_hash = Hash.new
+    #unless @entries.empty?
+    #  @entries.each do |key, value|
+    #    if key[/^#{arg}/] != nil
+    #      new_hash[key] = value
+    #    end
+    #  end
+    #end
+
+    @entries.select { |key,value| key[/^#{arg}/] }
   end
 
   def printable
     str = ""
-    unless @entries.empty?
-      keys = keywords
-      keys.each do |key|
-        str += %Q{\n[#{key}] "#{@entries[key]}"}
-      end
+    keywords.each do |key|
+      str += %Q{\n[#{key}] "#{@entries[key]}"}
     end
     str.slice!(0,1)
     str

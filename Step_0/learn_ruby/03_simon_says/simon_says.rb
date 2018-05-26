@@ -6,8 +6,8 @@ def shout(str)
   str.upcase
 end
 
-def repeat(str, int=2)
-  ((str+" ")*int).chop
+def repeat(str, int = 2)
+  ((str + " ") * int).chop
 end
 
 def start_of_word(str, num)
@@ -15,7 +15,8 @@ def start_of_word(str, num)
 end
 
 def first_word(str)
-  str.partition(" ").first
+  #str.partition(" ").first
+  str.split(" ").first
 end
 
 def titleize(str)

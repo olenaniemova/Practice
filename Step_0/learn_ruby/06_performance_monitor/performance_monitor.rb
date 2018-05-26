@@ -1,14 +1,8 @@
-def measure(count=nil)
-  average_time = 0
+def measure(count = nil)
+  count = 1 if count.nil?
   start = Time.now
-  if count == nil
+  count.times do
     yield
-    average_time = Time.now - start
-  else
-    count.times do
-      yield
-    end
-    average_time = (Time.now - start)/count
   end
-  average_time
+  (Time.now - start) / count
 end

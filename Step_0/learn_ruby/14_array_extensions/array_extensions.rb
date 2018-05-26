@@ -2,33 +2,15 @@ Array.class_eval do
   attr_accessor :sum
 
   def sum
-    @sum=0
-    if self.size != 0
-      self.each do |x|
-        @sum += x
-      end
-    end
-    @sum
+    self.empty? ? 0 : self.reduce(:+)
   end
 
   def square
-    new_array=[]
-    if self.size != 0
-      self.each do |x|
-        new_array.push(x**2)
-      end
-    end
-    new_array
+    self.map { |x| x ** 2 }
   end
 
   def square!
-    i=0
-    new_array = square
-    while i<self.size
-      self[i] = new_array[i]
-      i+=1
-    end
-    self
+    self.map! { |x| x ** 2 }
   end
 
 end

@@ -6,78 +6,40 @@ class XmlDocument
  end
 
  ## спосіб 1:  через білдер
-  def hello(args=nil)
-    value = nil
-    if block_given?
-      value = yield
-    end
+  def hello(args = nil)
+    value = block_given? ? yield : nil
+    BuildTag('hello', args, value, 0)
+  end
+
+  def BuildTag(name, args, value, count)
     TagBuilder.build do |builder|
-      builder.set_name('hello')
+      builder.set_name(name)
       builder.set_atr(args)
       builder.set_block(value)
-      builder.set_count(0)
+      builder.set_count(count)
       builder.set_ident(@indents)
     end
   end
 
-  def goodbye(args=nil)
-    value = nil
-    if block_given?
-      value = yield
-    end
-    TagBuilder.build do |builder|
-      builder.set_name('goodbye')
-      builder.set_atr(args)
-      builder.set_block(value)
-      builder.set_count(1)
-      builder.set_ident(@indents)
-    end
+  def goodbye(args = nil)
+    value = block_given? ? yield : nil
+    BuildTag('goodbye', args, value, 1)
   end
 
-  def come_back(args=nil)
-    value = nil
-    if block_given?
-      value = yield
-    end
-    TagBuilder.build do |builder|
-      builder.set_name('come_back')
-      builder.set_atr(args)
-      builder.set_block(value)
-      builder.set_count(2)
-      builder.set_ident(@indents)
-    end
+  def come_back(args = nil)
+    value = block_given? ? yield : nil
+    BuildTag('come_back', args, value, 2)
   end
 
-  def ok_fine(args=nil)
-    value = nil
-    if block_given?
-      value = yield
-    end
-    TagBuilder.build do |builder|
-      builder.set_name('ok_fine')
-      builder.set_atr(args)
-      builder.set_block(value)
-      builder.set_count(3)
-      builder.set_ident(@indents)
-    end
+  def ok_fine(args = nil)
+    value = block_given? ? yield : nil
+    BuildTag('ok_fine', args, value, 3)
   end
 
   def send(name)
-    value = nil
-    if block_given?
-      value = yield
-    end
-    TagBuilder.build do |builder|
-      builder.set_name(name)
-      builder.set_atr(nil)
-      builder.set_block(value)
-      builder.set_count(0)
-      builder.set_ident(@indents)
-    end
+    value = block_given? ? yield : nil
+    BuildTag(name, nil, value, 0)
   end
-
-
-
 
 #####################
 ##### спосіб 2: через методи
@@ -173,19 +135,28 @@ class TagBuilder
   end
 
   def get_tag
-    str = ""
     if @tag.atr == nil
       if @tag.block != nil
-        str = "<#{@tag.name}>#{@tag.block}</#{@tag.name}>"
-        str = "#{"  "*@tag.count}<#{@tag.name}>\n#{@tag.block}#{"  "*@tag.count}</#{@tag.name}>\n" if @tag.ident
+        if @tag.ident
+          str = "#{"  "*@tag.count}<#{@tag.name}>\n#{@tag.block}#{"  "*@tag.count}</#{@tag.name}>\n"
+        else
+          str = "<#{@tag.name}>#{@tag.block}</#{@tag.name}>"
+        end
       else
-        str = "<#{@tag.name}/>"
-        str = "#{"  "*@tag.count}<#{@tag.name}/>\n" if @tag.ident
+        if @tag.ident
+          str = "#{"  "*@tag.count}<#{@tag.name}/>\n"
+        else
+          str = "<#{@tag.name}/>"
+        end
+
       end
     else
       @tag.atr.each do |key,value|
-        str = "<#{@tag.name} #{key}='#{value}'/>"
-        str = "#{"  "*@tag.count}<#{@tag.name} #{key}='#{value}'/>\n" if @tag.ident
+        if @tag.ident
+          str = "#{"  "*@tag.count}<#{@tag.name} #{key}='#{value}'/>\n"
+        else
+          str = "<#{@tag.name} #{key}='#{value}'/>"
+        end
       end
     end
     str

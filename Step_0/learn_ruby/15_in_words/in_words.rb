@@ -6,10 +6,8 @@ Integer.class_eval do
 
 end
 
-
 module Numbers
   def Numbers.to_text(int)
-    result =""
     if int>=0 && int<100
       result = Numbers.various1(int)
     elsif int>=100 && int <1000
@@ -112,48 +110,44 @@ module Numbers
     result
   end
 
+  def Numbers.addition(title, first, others)
+    result = "#{Numbers.to_text(first)} #{title}"
+    result += " #{Numbers.to_text(others)}" if others != 0
+    result
+  end
+
   def Numbers.hundred(int)
     result = ""
     first_num = int/100
     others_num = int - first_num*100
-    result = "#{Numbers.to_text(first_num)} hundred"
-    result += " #{Numbers.to_text(others_num)}" if others_num != 0
-    result
+    result = Numbers.addition("hundred", first_num, others_num)
   end
 
   def Numbers.thousand(int)
     result = ""
     thousands = int/1000
     hundreds = int - thousands*1000
-    result = "#{Numbers.to_text(thousands)} thousand"
-    result += " #{Numbers.to_text(hundreds)}" if hundreds != 0
-    result
+    result = Numbers.addition("thousand", thousands, hundreds)
   end
 
   def Numbers.million(int)
     result = ""
     millions = int/10**6
     thousands = int - millions*10**6
-    result ="#{Numbers.to_text(millions)} million"
-    result += " #{Numbers.to_text(thousands)}" if thousands != 0
-    result
+    result = Numbers.addition("million", millions, thousands)
   end
 
   def Numbers.billion(int)
     result = ""
     billions = int/10**9
     others = int - billions*10**9
-    result = "#{Numbers.to_text(billions)} billion"
-    result += " #{Numbers.to_text(others)}" if others != 0
-    result
+    result = Numbers.addition("billion", billions, others)
   end
 
   def Numbers.trillion(int)
     result = ""
     trillions = int/10**12
     others = int - trillions*10**12
-    result = "#{Numbers.to_text(trillions)} trillion"
-    result += " #{Numbers.to_text(others)}" if others != 0
-    result
+    result = Numbers.addition("trillion", trillions, others)
   end
 end
