@@ -3,4 +3,4 @@
 
 23 May. Step 0. Completed tasks 06, 10-12
 
-24 May. Step 0. Completed tasks 14-15
+24 May. Step 0. Completed tasks 13-15
