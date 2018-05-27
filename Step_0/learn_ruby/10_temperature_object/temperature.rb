@@ -8,13 +8,11 @@ class Temperature
     end
 
     def in_celsius
-      #@c == nil ? @c = (@f - 32)*(5.0/9.0) : @c
-      #@c.round(1)
-      @c || (@f - 32) * (5.0 / 9.0)
+      @c ||= (@f - 32) * (5.0/9.0)
     end
 
     def in_fahrenheit
-      @f  || @c * (9.0 / 5.0) + 32
+      @f  ||= @c * (9.0/5.0) + 32
     end
 
     def self.from_celsius(arg)
@@ -22,7 +20,7 @@ class Temperature
     end
 
     def self.from_fahrenheit(arg)
-      Temperature.new(f: arg)
+      new(f: arg)
     end
 
 end

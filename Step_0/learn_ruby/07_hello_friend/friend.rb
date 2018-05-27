@@ -1,7 +1,7 @@
 class Friend
 
   def greeting(name = nil)
-    name == nil ? "Hello!" : "Hello, #{name}!"
+    name ? "Hello, #{name}!" : "Hello!"
   end
 
 end

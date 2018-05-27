@@ -6,11 +6,6 @@ class XmlDocument
  end
 
  ## спосіб 1:  через білдер
-  def hello(args = nil)
-    value = block_given? ? yield : nil
-    BuildTag('hello', args, value, 0)
-  end
-
   def BuildTag(name, args, value, count)
     TagBuilder.build do |builder|
       builder.set_name(name)
@@ -19,6 +14,11 @@ class XmlDocument
       builder.set_count(count)
       builder.set_ident(@indents)
     end
+  end
+
+  def method_missing(m, args = nil, &block)
+    value = block_given? ? yield : nil
+    BuildTag(m, args, value, 0)
   end
 
   def goodbye(args = nil)
@@ -36,71 +36,53 @@ class XmlDocument
     BuildTag('ok_fine', args, value, 3)
   end
 
-  def send(name)
-    value = block_given? ? yield : nil
-    BuildTag(name, nil, value, 0)
-  end
-
 #####################
 ##### спосіб 2: через методи
 def send1(tag_name)
-  str = ""
-  if tag_name != nil
-    str = "<#{tag_name}/>"
-  end
-  str
+  tag_name ? "<#{tag_name}/>" : ""
 end
 
-  def create_tag1(name, atr=nil, block=nil, count=0)
-    str = ""
-    if atr == nil
-      if block != nil
-        str = "<#{name}>#{block}</#{name}>"
-        str = "#{"  "*count}<#{name}>\n#{block}#{"  "*count}</#{name}>\n" if @indents
+  def create_tag1(name, atr = nil, block = nil, count = 0)
+    if atr.nil?
+      if block.nil?
+        str = @indents ? "#{"  " * count}<#{name}/>\n" : "<#{name}/>"
       else
-        str = "<#{name}/>"
-        str = "#{"  "*count}<#{name}/>\n" if @indents
+        str = @indents ? "#{"  " * count}<#{name}>\n#{block}#{"  " * count}</#{name}>\n" : "<#{name}>#{block}</#{name}>"
       end
     else
-      atr.each do |key,value|
-        str = "<#{name} #{key}='#{value}'/>"
-        str = "#{"  "*count}<#{name} #{key}='#{value}'/>\n" if @indents
-      end
+      key = atr.keys[0]
+      value = atr[key]
+      str = @indents ? "#{"  " * count}<#{name} #{key}='#{value}'/>\n" : "<#{name} #{key}='#{value}'/>"
     end
     str
   end
 
-  def hello1(atr=nil)
-    value = nil
+  def hello1(atr = nil)
     if block_given?
       value = yield
     end
-    #puts "helloo #{value}"
     create_tag1("hello", atr, value)
   end
 
-  def goodbye1(atr=nil)
-    value = nil
+  def goodbye1(atr = nil)
     if block_given?
       value = yield
     end
     create_tag1("goodbye", atr, value, 1)
   end
 
-  def come_back1(atr=nil)
-    value = nil
+  def come_back1(atr = nil)
     if block_given?
       value = yield
     end
-    create_tag1("come_back", atr, value,2)
+    create_tag1("come_back", atr, value, 2)
   end
 
-  def ok_fine1(atr=nil)
-    value = nil
+  def ok_fine1(atr = nil)
     if block_given?
       value = yield
     end
-    create_tag1("ok_fine", atr, value,3)
+    create_tag1("ok_fine", atr, value, 3)
   end
 #####################
 end
@@ -135,29 +117,16 @@ class TagBuilder
   end
 
   def get_tag
-    if @tag.atr == nil
-      if @tag.block != nil
-        if @tag.ident
-          str = "#{"  "*@tag.count}<#{@tag.name}>\n#{@tag.block}#{"  "*@tag.count}</#{@tag.name}>\n"
-        else
-          str = "<#{@tag.name}>#{@tag.block}</#{@tag.name}>"
-        end
+    if @tag.atr.nil?
+      if @tag.block.nil?
+        str = @tag.ident ? "#{"  " * @tag.count}<#{@tag.name}/>\n" : "<#{@tag.name}/>"
       else
-        if @tag.ident
-          str = "#{"  "*@tag.count}<#{@tag.name}/>\n"
-        else
-          str = "<#{@tag.name}/>"
-        end
-
+        str = @tag.ident ? "#{"  " * @tag.count}<#{@tag.name}>\n#{@tag.block}#{"  " * @tag.count}</#{@tag.name}>\n" : "<#{@tag.name}>#{@tag.block}</#{@tag.name}>"
       end
     else
-      @tag.atr.each do |key,value|
-        if @tag.ident
-          str = "#{"  "*@tag.count}<#{@tag.name} #{key}='#{value}'/>\n"
-        else
-          str = "<#{@tag.name} #{key}='#{value}'/>"
-        end
-      end
+      key = @tag.atr.keys[0]
+      value = @tag.atr[key]
+      str = @tag.ident ? "#{"  " * @tag.count}<#{@tag.name} #{key}='#{value}'/>\n" : "<#{@tag.name} #{key}='#{value}'/>"
     end
     str
   end

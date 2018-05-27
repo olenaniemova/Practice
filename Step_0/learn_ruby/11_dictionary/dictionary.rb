@@ -10,10 +10,6 @@ class Dictionary
       @entries[args] = nil
     else
       @entries.merge!(args)
-
-    #args.each do |key,value|
-    #  @entries["#{key}"] = (value.nil? ? nil : value)
-    #end
     end
   end
 
@@ -26,15 +22,6 @@ class Dictionary
   end
 
   def find(arg)
-    #new_hash = Hash.new
-    #unless @entries.empty?
-    #  @entries.each do |key, value|
-    #    if key[/^#{arg}/] != nil
-    #      new_hash[key] = value
-    #    end
-    #  end
-    #end
-
     @entries.select { |key,value| key[/^#{arg}/] }
   end
 

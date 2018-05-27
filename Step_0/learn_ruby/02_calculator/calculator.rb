@@ -7,22 +7,17 @@ def subtract(arg1, arg2)
 end
 
 def sum(arg)
-  arg.empty? ? 0 : arg.reduce(:+)
+  arg.reduce(0, :+)
 end
 
 def multiply(arg)
-  mul = 1
-  arg.inject { |mul, n| mul *= n }
+  arg.inject(1) { |mul, n| mul * n }
 end
 
 def power(arg1, arg2)
-  arg1 ** arg2
+  arg1**arg2
 end
 
 def factorial(arg)
-  factor = 1
-  if arg > 0
-    factor = (1..arg).inject { |factor, i| factor *= i }
-  end
-  factor
+  arg > 0 ? (1..arg).inject(1) { |f, i| f * i } : 1
 end
