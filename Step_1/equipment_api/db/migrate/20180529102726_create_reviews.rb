@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[5.1]
       t.string :title
       t.text :text
       t.datetime :date
-      t.references :user, index: true
+      t.belongs_to :user, index: true
       t.references :reviewable, polymorphic: true, index: true
       t.timestamps
     end
