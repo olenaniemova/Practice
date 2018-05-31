@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20180529102726) do
   create_table "reviews", force: :cascade do |t|
     t.string "title"
     t.text "text"
-    t.datetime "date"
     t.bigint "user_id"
     t.string "reviewable_type"
     t.bigint "reviewable_id"
