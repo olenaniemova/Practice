@@ -8,3 +8,13 @@
 25 May. Step 0. Refactoring
 
 29 May. Step 1. Create API application "equipment_api", database, models with migrations
+
+30 May. Step 1. Refactoring
+
+31 May. Step 1. Refactoring
+
+1 June. Step 2. Create model City and validation
+
+4 June. Step 2. Task with polymorphic associations
+
+5 June. Step 2. Refactoring
