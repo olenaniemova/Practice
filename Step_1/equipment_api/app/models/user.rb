@@ -6,7 +6,4 @@ class User < ApplicationRecord
   belongs_to :city
   has_many :items_reviews, through: :items, source: :reviews
 
-  def all_items_reviews
-    items_reviews
-  end
 end
