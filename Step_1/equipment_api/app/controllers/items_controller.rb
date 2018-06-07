@@ -1,9 +1,9 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :update, :destroy]
+  before_action :set_item, only: %i[show update destroy]
 
   def index
-    @items = Item.all
-    paginate json: @items
+    items = Item.all
+    paginate json: items
   end
 
   def show
@@ -11,11 +11,11 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
-    if @item.save
-      render :show, status: :created, location: @item
+    item = Item.new(item_params)
+    if item.save
+      render :show, status: :created, location: item
     else
-      render json: @item.errors, status: :unprocessable_entity
+      render json: item.errors, status: :unprocessable_entity
     end
   end
 
