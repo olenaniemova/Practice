@@ -17,4 +17,11 @@
 
 4 June. Step 2. Task with polymorphic associations
 
-5 June. Step 2. Refactoring
+5 June. Step 2. Refactoring. 
+	Step 3. Write a seed script. Create index action with pagination.
+
+6 June. Step 3. Create show/create/update/destroy actions. Test actions in Postman
+
+7 June. Step 3. Refactoring
+
+

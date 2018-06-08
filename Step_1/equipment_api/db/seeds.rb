@@ -1,7 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+# ruby encoding: utf-8
+
+c = City.create(name: 'Lviv')
+
+user1 = User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: c.id)
+user2 = User.create(last_name: 'n', first_name: 'lena', email: 'ln@example.com', city_id: c.id)
+
+i1 = Item.create(title: 'Skiing', description: 'Very cool skis', user_id: user1.id)
+i2 = Item.create(title: 'Ski suit', description: 'New ski suit', user_id: user1.id)
+Item.create(title: 'Snowboard', description: 'Snowboard is in good condition', user_id: user1.id)
+
+Booking.create(item_id: i1.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user2.id)
+Booking.create(item_id: i2.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user2.id)
+
+Review.create(title: 'Review for skiing', text: 'Very good skiing!', user_id: user2.id,
+              reviewable_type: 'Item', reviewable_id: i1.id)
+Review.create(title: 'Review for ski suit', text: 'Cool suit!!', user_id: user2.id,
+              reviewable_type: 'Item', reviewable_id: i2.id)
+Review.create(title: 'Rent', text: 'Responsible tenant', user_id: user1.id,
+              reviewable_type: 'User', reviewable_id: user2.id)
