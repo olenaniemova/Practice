@@ -6,6 +6,6 @@ class Item < ApplicationRecord
   has_and_belongs_to_many :filter_options
 
   scope :title, ->(word) { where('title ~* ?', word) }
-  scope :category_title, ->(word) { joins(:category).where(categories: { title: word }) }
+  scope :category_id, ->(id) { joins(:category).where(categories: { id: id }) }
   scope :option, ->(id) { joins(:filter_options).where(filter_options: { id: id })  }
 end
