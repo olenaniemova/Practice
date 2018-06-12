@@ -29,37 +29,33 @@ f1 = Filter.create(title: 'Size')
 f2 = Filter.create(title: 'Color')
 f3 = Filter.create(title: 'Brand')
 f4 = Filter.create(title: 'Type')
-f5 = Filter.create(title: 'Length')
+Filter.create(title: 'Length')
 Filter.create(title: 'Material of manufacture')
 Filter.create(title: 'Manufacturer country')
 
-CategoryFilter.create(category_id: ct1.id, filter_id: f1.id)
-CategoryFilter.create(category_id: ct1.id, filter_id: f2.id)
-CategoryFilter.create(category_id: ct1.id, filter_id: f3.id)
-CategoryFilter.create(category_id: ct1.id, filter_id: f4.id)
-CategoryFilter.create(category_id: ct1.id, filter_id: f5.id)
-CategoryFilter.create(category_id: ct2.id, filter_id: f1.id)
-CategoryFilter.create(category_id: ct2.id, filter_id: f2.id)
-CategoryFilter.create(category_id: ct2.id, filter_id: f3.id)
-CategoryFilter.create(category_id: ct2.id, filter_id: f4.id)
+ct1.filters << f1
+ct1.filters << f2
+ct1.filters << f3
+ct2.filters << f1
+ct2.filters << f3
+ct2.filters << f4
 
 fo1 = FilterOption.create(filter_id: f1.id, value: 38)
-FilterOption.create(filter_id: f1.id, value: 39)
-fo2 = FilterOption.create(filter_id: f1.id, value: 40)
+fo2 = FilterOption.create(filter_id: f1.id, value: 39)
+FilterOption.create(filter_id: f1.id, value: 40)
 FilterOption.create(filter_id: f1.id, value: 41)
 fo3 = FilterOption.create(filter_id: f2.id, value: 'Black')
-fo4 = FilterOption.create(filter_id: f2.id, value: 'White')
-fo5 = FilterOption.create(filter_id: f3.id, value: 'ATOMIC')
-fo6 = FilterOption.create(filter_id: f3.id, value: 'SALOMON')
+FilterOption.create(filter_id: f2.id, value: 'White')
+FilterOption.create(filter_id: f3.id, value: 'ATOMIC')
+fo4 = FilterOption.create(filter_id: f3.id, value: 'SALOMON')
 FilterOption.create(filter_id: f3.id, value: 'ROSSIGNOL')
 FilterOption.create(filter_id: f3.id, value: 'Volkl')
-fo7 = FilterOption.create(filter_id: f4.id, value: 'All Mountain')
+fo5 = FilterOption.create(filter_id: f4.id, value: 'All Mountain')
 FilterOption.create(filter_id: f4.id, value: 'Freeski')
 
-ItemOption.create(item_id: i1.id, filter_option_id: fo1.id)
-ItemOption.create(item_id: i1.id, filter_option_id: fo3.id)
-ItemOption.create(item_id: i1.id, filter_option_id: fo6.id)
-ItemOption.create(item_id: i1.id, filter_option_id: fo7.id)
-ItemOption.create(item_id: i2.id, filter_option_id: fo2.id)
-ItemOption.create(item_id: i2.id, filter_option_id: fo4.id)
-ItemOption.create(item_id: i2.id, filter_option_id: fo5.id)
+i1.filter_options << fo1
+i1.filter_options << fo3
+i1.filter_options << fo4
+i1.filter_options << fo5
+i2.filter_options << fo2
+i2.filter_options << fo4

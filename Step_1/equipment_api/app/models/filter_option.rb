@@ -1,4 +1,4 @@
 class FilterOption < ApplicationRecord
   belongs_to :filter
-  has_many :item_options, dependent: :destroy
+  has_and_belongs_to_many :items
 end

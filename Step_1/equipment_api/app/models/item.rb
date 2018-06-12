@@ -3,9 +3,9 @@ class Item < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :reviews, as: :reviewable, dependent: :destroy
   belongs_to :category
-  has_many :item_options, dependent: :destroy
+  has_and_belongs_to_many :filter_options
 
   scope :title, ->(word) { where('title ~* ?', word) }
   scope :category_title, ->(word) { joins(:category).where(categories: { title: word }) }
-  scope :option, ->(word) { joins(item_options: :filter_option).where(filter_options: { value: word })  }
+  scope :option, ->(id) { joins(:filter_options).where(filter_options: { id: id })  }
 end
