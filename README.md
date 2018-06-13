@@ -22,6 +22,17 @@
 
 6 June. Step 3. Create show/create/update/destroy actions. Test actions in Postman
 
-7 June. Step 3. Refactoring
+7 June. Step 3. Refactoring. Install rspec_api_documentation
+
+8 June. Step 4. Update DB diagram, сode models with migrations and associations.
+
+11 June. Step 4. Creating scopes: filter items by name or word from name or beginning of word, filter items by category, filter items by options.
+
+12 June. Step 4. Refactoring. Сreating documentation for the ItemController
+
+13 June. Step 5. Creating scopes: filter items by price range and date range
+
+
+
 
 
