@@ -17,8 +17,7 @@ class Item < ApplicationRecord
     booking = Booking.arel_table
     b_start = booking[:start_date].between(d_start..d_end)
     b_end = booking[:end_date].between(d_start..d_end)
-    query = booking.project(booking[:item_id]).where(b_start.or(b_end)).distinct.to_sql
-    booking_items = Booking.find_by_sql(query).pluck(:item_id)
-    Item.where(Item.arel_table[:id].not_in(booking_items))
+    booking_items = Booking.where(b_start.or(b_end)).distinct.pluck(:item_id)
+    Item.where(arel_table[:id].not_in(booking_items))
   }
 end
