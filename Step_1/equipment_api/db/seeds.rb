@@ -11,12 +11,16 @@ ct2 = Category.create(title: 'Equipment')
 Category.create(title: 'Boots')
 Category.create(title: 'Helmet')
 
-i1 = Item.create(title: 'Skiing', description: 'Very cool skis', user_id: user1.id, category_id: ct2.id)
-i2 = Item.create(title: 'Ski suit', description: 'New ski suit', user_id: user1.id, category_id: ct1.id)
-Item.create(title: 'Snowboard', description: 'Snowboard is in good condition', user_id: user1.id, category_id: ct2.id)
+i1 = Item.create(title: 'Skiing', description: 'Very cool skis', daily_price: 70, user_id: user1.id, category_id: ct2.id)
+i2 = Item.create(title: 'Ski suit', description: 'New ski suit', daily_price: 85, user_id: user1.id, category_id: ct1.id)
+Item.create(title: 'Snowboard', description: 'Snowboard is in good condition', daily_price: 60, user_id: user1.id, category_id: ct2.id)
 
 Booking.create(item_id: i1.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user2.id)
 Booking.create(item_id: i2.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user2.id)
+Booking.create(item_id: i1.id, start_date: '2018-06-07 12:00:00', end_date: '2018-06-10 18:00:00', user_id: user2.id)
+Booking.create(item_id: i2.id, start_date: '2018-07-01 12:00:00', end_date: '2018-07-04 18:00:00', user_id: user2.id)
+
+
 
 Review.create(title: 'Review for skiing', text: 'Very good skiing!', user_id: user2.id,
               reviewable_type: 'Item', reviewable_id: i1.id)
