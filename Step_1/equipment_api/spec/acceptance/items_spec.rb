@@ -90,45 +90,59 @@ RSpec.describe Item, type: :model do
   let(:user) { User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: city.id) }
   let(:categ) { Category.create(title: 'Jacket') }
   let(:item1) { Item.create(title: 'Skiing', description: 'Very cool skis', daily_price: 60, user_id: user.id, category_id: categ.id) }
-  let(:item2) { Item.create(title: 'Skiing', description: 'Very cool skis', daily_price: 80, user_id: user.id, category_id: categ.id) }
+  let(:item2) { Item.create(title: 'Skiing1', description: 'Very cool skis', daily_price: 80, user_id: user.id, category_id: categ.id) }
   let(:filter1) { Filter.create(title: 'Size') }
   let(:filter2) { Filter.create(title: 'Color') }
   let(:filter_opt1) { FilterOption.create(filter_id: filter1.id, value: 38) }
   let(:filter_opt2) { FilterOption.create(filter_id: filter2.id, value: 'Black') }
   let(:booking) { Booking.create(item_id: item1.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user.id)}
 
+  describe "#by_title" do
+    it 'finds items with title that contain [value]' do
+      t = Item.by_title(item1.title)
+      expect(t.first.title.include?(item1.title)).to be true
+    end
 
-  it 'by title' do
-    expect(Item.by_title(item1.title).to_sql).to eq Item.where('title ~* ?', item1.title).to_sql
+    it 'create SQL query' do
+      expect(Item.by_title(item1.title).to_sql).to eq Item.where('title ~* ?', item1.title).to_sql
+    end
   end
 
-  it 'by category' do
-    expect(Item.by_category(categ.id)).to eq Item.where(category_id: categ.id)
+  describe '#by_category' do
+    it 'finds items with category that eq [value]' do
+      expect(Item.by_category(categ.id)).to eq Item.where(category_id: categ.id)
+    end
   end
 
-  it 'by option' do
-    categ.filters << filter1
-    categ.filters << filter2
-    item1.filter_options << filter_opt1
-    item1.filter_options << filter_opt2
-    expect(Item.by_option(filter_opt1.id)).to eq Item.joins(:filter_options).where(filter_options: { id: filter_opt1.id })
+  describe '#by_option' do
+    it 'finds items with option that eq [value]' do
+      categ.filters << filter1
+      categ.filters << filter2
+      item1.filter_options << filter_opt1
+      item1.filter_options << filter_opt2
+      expect(Item.by_option(filter_opt1.id)).to eq Item.joins(:filter_options).where(filter_options: { id: filter_opt1.id })
+    end
   end
 
-  it 'by price_range' do
-    p_s = 100
-    p_e = 200
-    d = 2
-    expect(Item.by_price_range(p_s, p_e, d)).to eq Item.where(daily_price: (p_s / d)..(p_e / d))
+  describe '#by_price_range' do
+    it 'finds items with daily price within a range for a certain number of days' do
+      p_s = 100
+      p_e = 200
+      d = 2
+      expect(Item.by_price_range(p_s, p_e, d)).to eq Item.where(daily_price: (p_s / d)..(p_e / d))
+    end
   end
 
-  it 'by date range' do
-    d_s = '2018-06-01'
-    d_e = '2018-06-03'
-    b_start = Booking.where(start_date: d_s..d_e)
-    b_end = Booking.where(end_date: d_s..d_e)
-    booking_items = Booking.where(b_start.or(b_end)).distinct.pluck(:item_id)
-    items = Item.where.not(id: booking_items)
+  describe '#by_date_range' do
+    it 'finds items not booked in a certain period of days' do
+      d_s = '2018-06-01'
+      d_e = '2018-06-03'
+      b_start = Booking.where(start_date: d_s..d_e)
+      b_end = Booking.where(end_date: d_s..d_e)
+      booking_items = Booking.where(b_start.or(b_end)).pluck(:item_id)
+      items = Item.where.not(id: booking_items)
 
-    expect(Item.by_date_range(d_s, d_e)).to eq items
+      expect(Item.by_date_range(d_s, d_e)).to eq items
+    end
   end
 end

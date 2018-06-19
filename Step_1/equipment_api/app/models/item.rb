@@ -9,15 +9,20 @@ class Item < ApplicationRecord
   scope :by_category, ->(id) { where(category_id: id) }
   scope :by_option, ->(id) { joins(:filter_options).where(filter_options: { id: id })  }
 
-  scope :by_price_range, ->(p_start, p_end, days) {
-    where(arel_table[:daily_price].between((p_start / days)..(p_end / days)))
+  scope :by_price_range, ->(start_pr, end_pr, days) {
+    where(arel_table[:daily_price].between((start_pr.to_f / days.to_i)..(end_pr.to_f / days.to_i)))
   }
 
-  scope :by_date_range, ->(d_start, d_end) {
+  scope :by_date_range, ->(start_d, end_d) {
     booking = Booking.arel_table
-    b_start = booking[:start_date].between(d_start..d_end)
-    b_end = booking[:end_date].between(d_start..d_end)
-    booking_items = Booking.where(b_start.or(b_end)).distinct.pluck(:item_id)
+    b_start = booking[:start_date].between(start_d..end_d)
+    b_end = booking[:end_date].between(start_d..end_d)
+    booking_items = Booking.where(b_start.or(b_end)).pluck(:item_id).uniq
     Item.where(arel_table[:id].not_in(booking_items))
   }
+
+  def add_filter_opion(filter_option_id)
+    c = filter_options.where(id: filter_option_id)
+    filter_options << FilterOption.where(id: filter_option_id) if c.empty?
+  end
 end

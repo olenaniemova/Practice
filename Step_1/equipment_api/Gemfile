@@ -45,3 +45,4 @@ gem 'will_paginate'
 gem 'api-pagination', '~> 4.7.1'
 gem 'rspec_api_documentation'
 gem "apitome"
+gem 'has_scope'
