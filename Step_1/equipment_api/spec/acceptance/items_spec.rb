@@ -1,13 +1,15 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
+require 'database_cleaner'
+require 'factory_bot_rails'
 
 resource 'Items', :type => :controller do
   header 'Content-Type', 'application/json'
 
-  let(:city) { City.create(name: 'Lviv') }
-  let(:user) { User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: city.id) }
-  let(:categ) { Category.create(title: 'Jacket') }
-  let(:item) { Item.create(title: 'Skiing', description: 'Very cool skis', user_id: user.id, category_id: categ.id) }
+  let(:city) { create(:city) }
+  let(:user) { create(:user, city_id: city.id) }
+  let(:categ) { create(:category) }
+  let(:item) { create(:item, user_id: user.id, category_id: categ.id) }
 
   get '/items' do
     parameter :page, 'Page to view'
@@ -86,16 +88,16 @@ resource 'Items', :type => :controller do
 end
 
 RSpec.describe Item, type: :model do
-  let(:city) { City.create(name: 'Lviv') }
-  let(:user) { User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: city.id) }
-  let(:categ) { Category.create(title: 'Jacket') }
-  let(:item1) { Item.create(title: 'Skiing', description: 'Very cool skis', daily_price: 60, user_id: user.id, category_id: categ.id) }
-  let(:item2) { Item.create(title: 'Skiing1', description: 'Very cool skis', daily_price: 80, user_id: user.id, category_id: categ.id) }
-  let(:filter1) { Filter.create(title: 'Size') }
-  let(:filter2) { Filter.create(title: 'Color') }
-  let(:filter_opt1) { FilterOption.create(filter_id: filter1.id, value: 38) }
-  let(:filter_opt2) { FilterOption.create(filter_id: filter2.id, value: 'Black') }
-  let(:booking) { Booking.create(item_id: item1.id, start_date: '2018-06-01 12:00:00', end_date: '2018-06-04 18:00:00', user_id: user.id)}
+  let(:city) { create(:city) }
+  let(:user) { create(:user, city_id: city.id) }
+  let(:categ) { create(:category) }
+  let(:item1) { create(:item, user_id: user.id, category_id: categ.id) }
+  let(:item2) { create(:item, title: 'Ski suit', user_id: user.id, category_id: categ.id) }
+  let(:filter1) { create(:filter) }
+  let(:filter2) { create(:filter, title: 'Color') }
+  let(:filter_opt1) { create(:filter_option, filter_id: filter1.id) }
+  let(:filter_opt2) { create(:filter_option, filter_id: filter2.id, value: 'Black') }
+  let(:booking) { create(:booking, item_id: item1.id, user_id: user.id) }
 
   describe "#by_title" do
     it 'finds items with title that contain [value]' do

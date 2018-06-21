@@ -13,10 +13,30 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'factory_bot_rails'
+
 RSpec.configure do |config|
-  #config.default_formatter = :json
-  #config.format = [:html]
-  #config.format = :json
+
+  #FactoryBot
+  config.include FactoryBot::Syntax::Methods
+  #config.before(:suite) { FactoryBot.reload }
+
+  #config.generators do |g|
+  #  g.factory_bot dir: 'custom/dir/for/factories'
+  #end
+
+  #DB_cleaner
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+    FactoryBot.reload
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
