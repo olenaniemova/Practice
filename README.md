@@ -42,6 +42,8 @@
 
 21 June. Installing gems: database_cleaner and factory_bot_rails.
 
+25 June. Step 6. Refactoring
+
 
 
 

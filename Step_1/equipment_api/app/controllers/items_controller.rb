@@ -19,9 +19,7 @@ class ItemsController < ApplicationController
   def create
     item = Item.new(item_params)
     if item.save
-      if params[:filter_options]
-        params[:filter_options].each { |f| item.add_filter_opion(f) }
-      end
+      item.add_filter_opions(params[:filter_options]) if params[:filter_options]
       render :show, status: :created, location: item
     else
       render json: item.errors, status: :unprocessable_entity
@@ -30,9 +28,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      if params[:filter_options]
-        params[:filter_options].each { |f| @item.add_filter_opion(f) }
-      end
+      @item.add_filter_opions(params[:filter_options]) if params[:filter_options]
       render :show, status: :ok, location: @item
     else
       render json: @item.errors, status: :unprocessable_entity
