@@ -21,7 +21,4 @@ class Item < ApplicationRecord
     Item.where(arel_table[:id].not_in(booking_items))
   }
 
-  def add_filter_opions(fo_ids)
-    self.filter_option_ids = fo_ids
-  end
 end

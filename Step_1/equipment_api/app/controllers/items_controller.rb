@@ -19,7 +19,6 @@ class ItemsController < ApplicationController
   def create
     item = Item.new(item_params)
     if item.save
-      item.add_filter_opions(params[:filter_options]) if params[:filter_options]
       render :show, status: :created, location: item
     else
       render json: item.errors, status: :unprocessable_entity
@@ -28,7 +27,6 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      @item.add_filter_opions(params[:filter_options]) if params[:filter_options]
       render :show, status: :ok, location: @item
     else
       render json: @item.errors, status: :unprocessable_entity
@@ -46,6 +44,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:title, :description, :user_id, :category_id, :daily_price)
+    params.require(:item).permit(:title, :description, :user_id, :category_id, :daily_price, filter_option_ids: [])
   end
 end
