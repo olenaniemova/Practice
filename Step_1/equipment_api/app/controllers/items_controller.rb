@@ -1,8 +1,14 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show update destroy]
 
+  has_scope :by_title
+  has_scope :by_category
+  has_scope :by_option
+  has_scope :by_price_range, using: %i[start_pr end_pr days], type: :hash
+  has_scope :by_date_range, using: %i[start_d end_d], type: :hash
+
   def index
-    items = Item.all
+    items = apply_scopes(Item).all
     paginate json: items
   end
 
@@ -38,6 +44,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:title, :description, :user_id, :category_id)
+    params.require(:item).permit(:title, :description, :user_id, :category_id, :daily_price, filter_option_ids: [])
   end
 end

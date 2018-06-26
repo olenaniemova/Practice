@@ -32,6 +32,21 @@
 
 13 June. Step 5. Creating scopes: filter items by price range and date range
 
+14 June. Step 5. Refactoring. Creating tests for scopes.
+
+18 June. Step 6. Apply all items filtering to index action. Make create/update actions able to save options for item.
+
+19 June. Step 6. Refactoring tests for scopes.
+ 
+20 June. Refactoring tasks in Step 0 (task 15).
+
+21 June. Installing gems: database_cleaner and factory_bot_rails.
+
+25 June. Step 6. Refactoring
+
+
+
+
 
 
 
