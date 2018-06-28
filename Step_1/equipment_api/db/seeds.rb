@@ -3,8 +3,10 @@
 
 city = City.create(name: 'Lviv')
 
-user1 = User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: city.id)
-user2 = User.create(last_name: 'n', first_name: 'lena', email: 'ln@example.com', city_id: city.id)
+user1 = User.create(last_name: 'user', first_name: 'user', email: 'current_user@example.com', city_id: city.id, password: 'secret', password_confirmation: 'secret')
+  #password_digest: 'secret')
+user2 = User.create(last_name: 'n', first_name: 'lena', email: 'ln@example.com', city_id: city.id, password: 'secret', password_confirmation: 'secret')
+  #password_digest: 'secret')
 
 ct1 = Category.create(title: 'Jacket')
 ct2 = Category.create(title: 'Equipment')

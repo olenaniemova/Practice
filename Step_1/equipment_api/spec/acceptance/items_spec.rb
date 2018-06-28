@@ -5,7 +5,9 @@ require 'factory_bot_rails'
 
 resource 'Items', :type => :controller do
   header 'Content-Type', 'application/json'
+  header 'Authorization', :token
 
+  let(:token) { Knock::AuthToken.new(payload: { sub: user.id }).token{ "Bearer #{token}" } }
   let(:city) { create(:city) }
   let(:user) { create(:user, city_id: city.id) }
   let(:categ) { create(:category) }
@@ -21,8 +23,13 @@ resource 'Items', :type => :controller do
       end
     end
 
+    example_request 'Authorization' do
+      expect(headers["Authorization"]).to eq(token)
+    end
+
     example_request 'Get a list of all items' do
       expect(response_body).to eq(Item.all.to_json)
+      expect(headers["Authorization"]).to eq(token)
       expect(status).to eq(200)
     end
 

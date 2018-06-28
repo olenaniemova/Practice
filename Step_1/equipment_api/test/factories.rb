@@ -7,6 +7,8 @@ FactoryBot.define do
     first_name 'John'
     last_name  'Doe'
     email 'juser@example.com'
+    password 'secret'
+    password_confirmation 'secret'
     city_id
   end
 

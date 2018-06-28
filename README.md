@@ -44,6 +44,11 @@
 
 25 June. Step 6. Refactoring
 
+26 June. Step 6. Refactoring. Creating authorization.
+
+27 June. Creating authorization. Creating report.
+
+29 June. Creating report and presentation.
 
 
 

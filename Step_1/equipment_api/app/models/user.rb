@@ -6,4 +6,6 @@ class User < ApplicationRecord
   belongs_to :city
   has_many :items_reviews, through: :items, source: :reviews
 
+  has_secure_password
+
 end
