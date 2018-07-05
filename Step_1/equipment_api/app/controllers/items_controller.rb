@@ -9,39 +9,27 @@ class ItemsController < ApplicationController
   has_scope :by_date_range, using: %i[start_d end_d], type: :hash
 
   def index
-    if current_user
-      items = apply_scopes(Item).all
-      paginate json: items
-    end
+    items = apply_scopes(Item).all
+    paginate json: items
   end
 
   def show
-    render json: @item if current_user
+    render json: @item
   end
 
   def create
-    if current_user
-      item = Item.new(item_params)
-      if item.save
-        render :show, status: :created, location: item
-      else
-        render json: item.errors, status: :unprocessable_entity
-      end
-    end
+    item = Item.new(item_params.merge(user_id: current_user.id))
+    return render json: item.errors, status: :unprocessable_entity unless item.save
+    render :show, status: :created, location: item
   end
 
   def update
-    if current_user
-      if @item.update(item_params)
-        render :show, status: :ok, location: @item
-      else
-        render json: @item.errors, status: :unprocessable_entity
-      end
-    end
+    return render json: @item.errors, status: :unprocessable_entity unless @item.update(item_params)
+    render :show, status: :ok, location: @item
   end
 
   def destroy
-    @item.destroy if current_user
+    @item.destroy
   end
 
   private
@@ -51,6 +39,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:title, :description, :user_id, :category_id, :daily_price, filter_option_ids: [])
+    params.require(:item).permit(:title, :description, :category_id, :daily_price, filter_option_ids: [])
   end
 end
