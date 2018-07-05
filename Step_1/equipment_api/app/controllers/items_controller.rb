@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_item, only: %i[show update destroy]
 
   has_scope :by_title
@@ -17,20 +18,14 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.new(item_params)
-    if item.save
-      render :show, status: :created, location: item
-    else
-      render json: item.errors, status: :unprocessable_entity
-    end
+    item = Item.new(item_params.merge(user_id: current_user.id))
+    return render json: item.errors, status: :unprocessable_entity unless item.save
+    render :show, status: :created, location: item
   end
 
   def update
-    if @item.update(item_params)
-      render :show, status: :ok, location: @item
-    else
-      render json: @item.errors, status: :unprocessable_entity
-    end
+    return render json: @item.errors, status: :unprocessable_entity unless @item.update(item_params)
+    render :show, status: :ok, location: @item
   end
 
   def destroy
@@ -44,6 +39,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:title, :description, :user_id, :category_id, :daily_price, filter_option_ids: [])
+    params.require(:item).permit(:title, :description, :category_id, :daily_price, filter_option_ids: [])
   end
 end

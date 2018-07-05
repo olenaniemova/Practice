@@ -109,7 +109,7 @@ table th, table td {
       <h1>Items API</h1>
 
       <div class="article">
-        <h2>Get a list of all items</h2>
+        <h2>Authorization</h2>
         <h3>GET /items</h3>
 
           <h3>Parameters</h3>
@@ -145,7 +145,7 @@ table th, table td {
 
             <h4>Headers</h4>
             <pre class="request headers">Content-Type: application/json
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzA2MTQ5NTQsInN1YiI6Mn0.R4yo6tmbgLCdBwazMkbbBf68HvN0ILJl3OP42SCYreI
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzA2MTQ5NTQsInN1YiI6MX0.vlXVBuv-gWmdNnmqxOBlWYMHV_zNjVrz5FQHVxKA1Hw
 Host: example.org
 Cookie: </pre>
 
@@ -160,43 +160,43 @@ Cookie: </pre>
               <pre class="response headers">Per-Page: 30
 Total: 3
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;24199cd2e6109c7bc726c2ba400b4d79&quot;
+ETag: W/&quot;090ad4f697d7b19e81d61fddfb2972ab&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 1c02931f-cc9b-46c0-ae8d-a5bc175a0eb9
-X-Runtime: 0.007008
+X-Request-Id: a75caa36-a741-4520-bc10-afe7bf168c6e
+X-Runtime: 0.032212
 Content-Length: 562</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">[
   {
-    &quot;id&quot;: 4,
-    &quot;user_id&quot;: 2,
+    &quot;id&quot;: 1,
+    &quot;user_id&quot;: 1,
     &quot;title&quot;: &quot;Skiing #0&quot;,
     &quot;description&quot;: &quot;Very cool skis&quot;,
-    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.502Z&quot;,
-    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.502Z&quot;,
-    &quot;category_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.334Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.334Z&quot;,
+    &quot;category_id&quot;: 1,
     &quot;daily_price&quot;: null
   },
   {
-    &quot;id&quot;: 5,
-    &quot;user_id&quot;: 2,
+    &quot;id&quot;: 2,
+    &quot;user_id&quot;: 1,
     &quot;title&quot;: &quot;Skiing #1&quot;,
     &quot;description&quot;: &quot;Very cool skis&quot;,
-    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.508Z&quot;,
-    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.508Z&quot;,
-    &quot;category_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.341Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.341Z&quot;,
+    &quot;category_id&quot;: 1,
     &quot;daily_price&quot;: null
   },
   {
-    &quot;id&quot;: 6,
-    &quot;user_id&quot;: 2,
+    &quot;id&quot;: 3,
+    &quot;user_id&quot;: 1,
     &quot;title&quot;: &quot;Skiing #2&quot;,
     &quot;description&quot;: &quot;Very cool skis&quot;,
-    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.514Z&quot;,
-    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.514Z&quot;,
-    &quot;category_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2018-07-02T10:49:14.346Z&quot;,
+    &quot;updated_at&quot;: &quot;2018-07-02T10:49:14.346Z&quot;,
+    &quot;category_id&quot;: 1,
     &quot;daily_price&quot;: null
   }
 ]</pre>

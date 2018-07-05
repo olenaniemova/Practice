@@ -44,6 +44,7 @@ GEM
       railties
       rspec_api_documentation
     arel (8.0.0)
+    bcrypt (3.1.12)
     builder (3.2.3)
     byebug (10.0.2)
     concurrent-ruby (1.0.5)
@@ -64,6 +65,11 @@ GEM
       activesupport (>= 4.1)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    jwt (1.5.6)
+    knock (2.1.1)
+      bcrypt (~> 3.1)
+      jwt (~> 1.5)
+      rails (>= 4.2)
     kramdown (1.17.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -167,10 +173,12 @@ PLATFORMS
 DEPENDENCIES
   api-pagination (~> 4.7.1)
   apitome
+  bcrypt
   byebug
   database_cleaner
   factory_bot_rails
   has_scope
+  knock
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 3.7)
